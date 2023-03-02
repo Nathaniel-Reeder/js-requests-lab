@@ -61,7 +61,7 @@ const sayHello = () => {
 // DO NOT EDIT FUNCTION
 
 // CODE HERE
-
+sayHelloButton.addEventListener('click', sayHello)
 
 // PROBLEM 5 
 /*
@@ -75,7 +75,9 @@ const sayHello = () => {
 */ 
 
 const ohMy = () => {
-    // YOUR CODE HERE
+    axios.get('http://localhost:3000/animals').then((response)=>{
+        console.log(response.data)
+    }).catch(err => {console.log({err, message: 'Error in ohMy'})})
 }
 
 document.getElementById('animals-button').addEventListener('click', ohMy)
@@ -95,8 +97,15 @@ document.getElementById('animals-button').addEventListener('click', ohMy)
 */
 
 const repeatMyParam = () => {
-    //YOUR CODE HERE
+    axios.get('http://localhost:3000/repeat/"what"').then((response) => {
+        console.log(response.data)
+        document.querySelector('#repeat-text').textContent = response.data
+        document.querySelector('#repeat-text').style.display = 'block'
+    }).catch(err => {console.log('error in repeatMyParam')})
+    
 }
+
+document.querySelector('#repeat-button').addEventListener('click', repeatMyParam)
 
 // PROBLEM 7
 /*
@@ -122,7 +131,11 @@ const repeatMyParam = () => {
 
 // CODE HERE
 
+function getReqTest () {
+    axios.get('http://localhost:3000/query-test?age=27').then((response)=>{console.log(response.data)})
+}
 
+document.querySelector('#query-button').addEventListener('click', getReqTest)
 
 ////////////////
 //INTERMEDIATE//

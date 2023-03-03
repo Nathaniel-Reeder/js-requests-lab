@@ -76,7 +76,11 @@ sayHelloButton.addEventListener('click', sayHello)
 
 const ohMy = () => {
     axios.get('http://localhost:3000/animals').then((response)=>{
-        console.log(response.data)
+        for(i=0; i<response.data.length; i++){
+            let newP = document.createElement('p')
+            newP.textContent = response.data[i]
+            document.querySelector('body').appendChild(newP)
+        }
     }).catch(err => {console.log({err, message: 'Error in ohMy'})})
 }
 
@@ -132,7 +136,7 @@ document.querySelector('#repeat-button').addEventListener('click', repeatMyParam
 // CODE HERE
 
 function getReqTest () {
-    axios.get('http://localhost:3000/query-test?age=27').then((response)=>{console.log(response.data)})
+    axios.get('http://localhost:3000/query-test?age=27&name=Nate&gender=male').then((response)=>{console.log(response.data)})
 }
 
 document.querySelector('#query-button').addEventListener('click', getReqTest)
@@ -161,7 +165,9 @@ document.querySelector('#query-button').addEventListener('click', getReqTest)
 
 // Edit code in Problem 8
 
+// answer to 1: console logged that I sent an empty query.
 
+//answer to 2: got an error that was caught and console logged a nested object with a message that i sent more than 1 query and a smaller object containing my queries
 
 ////////////
 //ADVANCED//
@@ -187,3 +193,48 @@ document.querySelector('#query-button').addEventListener('click', getReqTest)
 */
 
 // CODE HERE 
+
+function createFood (event) {
+    event.preventDefault()
+
+    let foodInput = document.querySelector('#food-input')
+    let body = {
+        newFood: foodInput.value
+    }
+    axios.post('https://localhost:3000/food', body).then((res) => {
+        res.data.forEach(item => {
+            let element = document.createElement('p')
+            element.textContent = item
+            document.querySelector('section').appendChild(element)
+        })
+    }).catch(err => console.log(err))
+}
+
+document.querySelector('#food-form').addEventListener('submit', createFood)
+
+
+/*
+function createFood(e){
+    e.preventDefault()
+    let list = document.querySelector('ol')
+    let foodInput = document.getElementById("foodInput");
+
+    list.innerHTML = '';
+
+    let maBod = {
+        newFood: foodInput.value
+    };
+
+    axios.post('http://localhost:3000/food', maBod).then(result => {
+        // console.log(result.data);
+        result.data.forEach(item => {
+            let element = document.createElement('li');
+            element.textContent = item;
+            list.appendChild(element);
+        })
+    }).catch(err => console.log(err));
+}
+
+document.querySelector('#food-form').addEventListener("submit", createFood);
+*/
+
